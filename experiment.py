@@ -83,9 +83,6 @@ subprocess.run(['git', 'clone', 'https://github.com/pie3636/newsjam.git'])
 os.chdir('newsjam')
 print('Installing Python modules...')
 subprocess.run(['python3', '-m', 'pip', 'install', '-r', 'requirements.txt'])
-print('Downloading SpaCy models...')
-subprocess.run(['python3', '-m', 'spacy', 'download', 'fr_core_news_lg'])
-subprocess.run(['python3', '-m', 'spacy', 'download', 'en_core_web_trf'])
 print()
 
 # Read parameters
