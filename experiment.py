@@ -82,7 +82,7 @@ except FileNotFoundError:
 subprocess.run(['git', 'clone', 'https://github.com/pie3636/newsjam.git'])
 os.chdir('newsjam')
 print('Installing Python modules...')
-#subprocess.run(['python3', '-m', 'pip', 'install', '-r', 'requirements.txt'])
+subprocess.run(['python3', '-m', 'pip', 'install', '-r', 'requirements.txt'])
 print()
 
 # Read parameters
@@ -163,7 +163,7 @@ if exp_type == 'e':
                 count += 1
             else:
                 cur_summ += line + '\n'
-            gen_summs.append(cur_summ[:-1])
+        gen_summs.append(cur_summ[:-1])
         gen_summs = gen_summs[1:]
     
     # Read second list of generated summaries
@@ -180,7 +180,7 @@ if exp_type == 'e':
                 count += 1
             else:
                 cur_summ += line + '\n'
-            other_gen_summs.append(cur_summ[:-1])
+        other_gen_summs.append(cur_summ[:-1])
         other_gen_summs = other_gen_summs[1:]
     
     articles, nlp, lang = get_articles(in_dataset) # Read reference dataset
@@ -190,10 +190,11 @@ if exp_type == 'e':
         ref_summs = [article['summary'] for article in articles]
     else:
         ref_summs = [article['highlights'] for article in articles]
+        
     from newsjam.summ.utils import get_keyword_sentences
     
     print('Generating all keyword summaries')
-    other_ref_summs = ['\n'.join([x for x in get_keyword_sentences(nlp(summary), lang)]) for summary in tqdm(ref_summs)]
+    other_ref_summs = ['\n'.join([' '.join(x) for x in get_keyword_sentences(nlp(summary), lang)]) for summary in tqdm(ref_summs)]
     
     if keywords:
         gen_summs, other_gen_summs = other_gen_summs, gen_summs
@@ -220,8 +221,9 @@ if exp_type == 'e':
             pretraining = {'epochs': 5, 'sents': orig_sents}
         else:
             pretraining = {}
-        wordmover_eval = WordMoverEval(model, finetuning2, fine_tune=pretraining)
-        results = wordmover_eval.evaluate_many(ref_summs, gen_summs)
+        wordmover_eval = WordMoverEval(model, pretraining=pretraining2)
+        scores1, scores2 = wordmover_eval.evaluate_many(ref_summs, gen_summs)
+        results = rouge_l_eval.get_results(scores1, scores2)
     elif metric == 'Time measurement':
         timing = True
     
