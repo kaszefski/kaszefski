@@ -83,6 +83,9 @@ subprocess.run(['git', 'clone', 'https://github.com/pie3636/newsjam.git'])
 os.chdir('newsjam')
 print('Installing Python modules...')
 subprocess.run(['python3', '-m', 'pip', 'install', '-r', 'requirements.txt'])
+print('Downloading SpaCy models...')
+subprocess.run(['python3', '-m', 'spacy', 'download', 'fr_core_news_lg'])
+subprocess.run(['python3', '-m', 'spacy', 'download', 'en_core_web_trf'])
 print()
 
 # Read parameters
@@ -212,6 +215,7 @@ if exp_type == 'e':
     elif metric == 'Word Mover distance':
         from newsjam.eval.wordmover import WordMoverEval
         import fasttext.util
+        fasttext.util.download_model(f'{lang}', if_exists='ignore')
         model = fasttext.load_model(f'cc.{lang}.300.bin')
         if pretraining2:
             if 'text' in article:
@@ -239,7 +243,7 @@ if exp_type == 'e':
         if metric == 'Word Mover Distance' and pretraining2:
             disp += ' (pretrained)'
         print(disp)
-        print(f'{d - m - p - k}')
+        print(f'{d} - {m} - {p} - {k}')
         print('='*50)
         for k, v in results.items():
             print(k.ljust(25), round(v*100, 3), '%')
