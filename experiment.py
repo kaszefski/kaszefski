@@ -343,19 +343,4 @@ if exp_type == 's' or timing:
     print('The files will be saved to the user/home folder of your local computer.')
     print('Then upload them to the gen/ folder on GitHub.')
     print('='*80)
-    
-
-    © 2022 GitHub, Inc.
-
-    Terms
-    Privacy
-    Security
-    Status
-    Docs
-    Contact GitHub
-    Pricing
-    API
-    Training
-    Blog
-    About
-
+   
