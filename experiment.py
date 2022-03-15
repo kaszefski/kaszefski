@@ -1,3 +1,31 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@kaszefski
+pie3636 /
+newsjam
+Public
+
+Code
+Issues 1
+Pull requests
+Actions
+Projects
+Wiki
+Security
+
+    Insights
+
+newsjam/experiment.py /
+@pie3636
+pie3636 Add requirements and more
+Latest commit 8030214 31 minutes ago
+History
+1 contributor
+executable file 348 lines (307 sloc) 13.6 KB
 import argparse
 import os
 import shutil
@@ -83,6 +111,9 @@ subprocess.run(['git', 'clone', 'https://github.com/pie3636/newsjam.git'])
 os.chdir('newsjam')
 print('Installing Python modules...')
 subprocess.run(['python3', '-m', 'pip', 'install', '-r', 'requirements.txt'])
+print('Downloading SpaCy models...')
+subprocess.run(['python3', '-m', 'spacy', 'download', 'fr_core_news_lg'])
+subprocess.run(['python3', '-m', 'spacy', 'download', 'en_core_web_trf'])
 print()
 
 # Read parameters
@@ -343,3 +374,18 @@ if exp_type == 's' or timing:
     print('Then upload them to the gen/ folder on GitHub.')
     print('='*80)
     
+
+    © 2022 GitHub, Inc.
+
+    Terms
+    Privacy
+    Security
+    Status
+    Docs
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
