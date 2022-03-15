@@ -79,7 +79,7 @@ try:
     shutil.rmtree('newsjam')
 except FileNotFoundError:
     print('No previous newsjam repo was found. Cloning.')
-#subprocess.run(['git', 'clone', 'https://github.com/pie3636/newsjam.git'])
+subprocess.run(['git', 'clone', 'https://github.com/pie3636/newsjam.git'])
 os.chdir('newsjam')
 print('Installing Python modules...')
 #subprocess.run(['python3', '-m', 'pip', 'install', '-r', 'requirements.txt'])
