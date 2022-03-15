@@ -2,7 +2,7 @@ import argparse
 import os
 import shutil
 import subprocess
-#come on
+
 from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='Runs newsjam experiments.')
@@ -83,7 +83,6 @@ subprocess.run(['git', 'clone', 'https://github.com/pie3636/newsjam.git'])
 os.chdir('newsjam')
 print('Installing Python modules...')
 subprocess.run(['python3', '-m', 'pip', 'install', '-r', 'requirements.txt'])
-
 print()
 
 # Read parameters
@@ -144,8 +143,8 @@ if exp_type == 'e':
     
     metric = metrics[int(metric)]
     
+    pretraining2 = ''
     if metric == 'Word Mover distance':
-        pretraining2 = ''
         while pretraining2 not in ['y', 'n']:
             pretraining2 = input('Should embeddings be fine-tuned for Word Mover Distance evaluation? [Y/N] ').lower()
         pretraining2 = pretraining2 == 'y'
@@ -236,7 +235,10 @@ if exp_type == 'e':
         print('Please post the following block of text to the #eval-results-paper channel on Discord:')
         print()
         print('='*50)
-        print(f'Results for {in_file} / {metric}' + (f' (pretrained)' if pretraining2 else ''))
+        disp = f'Results for {in_file} / {metric}'
+        if metric == 'Word Mover Distance' and pretraining2:
+            disp += ' (pretrained)'
+        print(disp)
         print(f'{d - m - p - k}')
         print('='*50)
         for k, v in results.items():
@@ -343,4 +345,4 @@ if exp_type == 's' or timing:
     print('The files will be saved to the user/home folder of your local computer.')
     print('Then upload them to the gen/ folder on GitHub.')
     print('='*80)
-   
+    
