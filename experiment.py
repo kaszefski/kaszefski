@@ -193,7 +193,7 @@ if exp_type == 'e':
     from newsjam.summ.utils import get_keyword_sentences
     
     print('Generating all keyword summaries')
-    other_ref_summs = ['\n'.join(x) for x in get_keyword_sentences(nlp(summary), lang) for summary in tqdm(ref_summs)]
+    other_ref_summs = ['\n'.join(x for x in get_keyword_sentences(nlp(summary), lang)) for summary in tqdm(ref_summs)]
     
     if keywords:
         gen_summs, other_gen_summs = other_gen_summs, gen_summs
